@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { Button } from '@heroui/button';
 import { TrashIcon, ScissorsIcon } from '@heroicons/react/24/outline';
 import { VideoItem } from './types';
 import { useState, useRef, useEffect } from 'react';
@@ -19,7 +18,6 @@ interface VideoThumbnailProps {
 
 const VideoThumbnail = ({
   video,
-  index,
   isActive,
   isDragged,
   onSelect,

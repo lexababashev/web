@@ -12,7 +12,7 @@ export const useVideoPlayback = (
   const [hideControls, setHideControls] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTrimModalOpen, setIsTrimModalOpen] = useState(false);
-  const [hasEditedTimeline, setHasEditedTimelineState] = useState(false);
+  const [hasEditedTimeline] = useState(false);
 
   const videoPlayerRef = useRef<HTMLVideoElement>(null);
   const modalVideoRef = useRef<HTMLVideoElement>(null);

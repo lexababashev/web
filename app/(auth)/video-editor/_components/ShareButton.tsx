@@ -25,7 +25,7 @@ const ShareButton = ({ eventId }: ShareButtonProps) => {
     invitees,
   } = useInvitee(eventId);
 
-  const { data: user, isLoading: userLoading } = useUser();
+  const { data: user} = useUser();
 
   const [isOpen, setIsOpen] = useState(false);
   const [copiedInviteeId, setCopiedInviteeId] = useState<string | null>(null);
