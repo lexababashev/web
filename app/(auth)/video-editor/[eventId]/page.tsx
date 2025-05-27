@@ -34,7 +34,12 @@ export default function VideoEditorPage({ params }: VideoEditorPageProps) {
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const { useGetEvent } = useEvent();
-  const { useGetEventUploads, uploadOwnerVideo, deleteUpload, useGetCompiledUpload } = useUpload();
+  const {
+    useGetEventUploads,
+    uploadOwnerVideo,
+    deleteUpload,
+    useGetCompiledUpload,
+  } = useUpload();
   const { data: eventData, isLoading: eventLoading } = useGetEvent(eventId);
   const {
     data: eventUploads,
@@ -43,11 +48,9 @@ export default function VideoEditorPage({ params }: VideoEditorPageProps) {
   } = useGetEventUploads(eventId);
 
   // Check if there's an existing compiled video
-  const {
-    data: compiledUploads,
-    isLoading: compiledUploadsLoading,
-  } = useGetCompiledUpload(eventId);
-  
+  const { data: compiledUploads, isLoading: compiledUploadsLoading } =
+    useGetCompiledUpload(eventId);
+
   const { data: user } = useUser();
 
   const router = useRouter();
@@ -265,10 +268,7 @@ export default function VideoEditorPage({ params }: VideoEditorPageProps) {
   if (compiledUploadsLoading) {
     return (
       <main className="flex min-h-screen flex-col">
-        <Header
-          showBackButton={true}
-          backText="Dashboard"
-        />
+        <Header showBackButton={true} backText="Dashboard" />
         <div className="flex flex-col justify-center items-center pt-24 px-6 w-full">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
           <p className="text-center text-gray-600">Loading event data...</p>
@@ -280,9 +280,9 @@ export default function VideoEditorPage({ params }: VideoEditorPageProps) {
   // If compilation just completed, show the compiled video view
   if (videoCompilation.isCompilationComplete) {
     return (
-      <CompiledVideoView 
+      <CompiledVideoView
         compiledVideoBlob={videoCompilation.compiledVideoBlob}
-        eventId={eventId} 
+        eventId={eventId}
       />
     );
   }
@@ -290,9 +290,9 @@ export default function VideoEditorPage({ params }: VideoEditorPageProps) {
   // If there's an existing compiled video, show the CompiledVideoView
   if (compiledUploads && compiledUploads.length > 0) {
     return (
-      <CompiledVideoView 
+      <CompiledVideoView
         compiledVideoUrl={compiledUploads[0].uploadPath}
-        eventId={eventId} 
+        eventId={eventId}
       />
     );
   }

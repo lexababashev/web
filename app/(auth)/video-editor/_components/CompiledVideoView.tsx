@@ -59,7 +59,7 @@ export default function CompiledVideoView({
   useEffect(() => {
     // Clear previous video source to show loading state
     setVideoSource('');
-    
+
     // First clean up any existing object URL
     if (videoObjectUrl.current) {
       URL.revokeObjectURL(videoObjectUrl.current);
@@ -68,34 +68,32 @@ export default function CompiledVideoView({
 
     const setupVideoSource = async () => {
       setIsLoadingVideo(true);
-      
 
-        if (compiledVideoBlob) {
-          // If we have a blob, create an object URL from it
-          const url = URL.createObjectURL(compiledVideoBlob);
+      if (compiledVideoBlob) {
+        // If we have a blob, create an object URL from it
+        const url = URL.createObjectURL(compiledVideoBlob);
+        videoObjectUrl.current = url;
+        setVideoSource(url);
+      } else if (compiledVideoUrl) {
+        try {
+          const response = await fetch(compiledVideoUrl);
+
+          if (!response.ok) {
+            throw new Error(`Failed to fetch video: ${response.statusText}`);
+          }
+
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
           videoObjectUrl.current = url;
           setVideoSource(url);
-        } else if (compiledVideoUrl) {
-          try {
-            const response = await fetch(compiledVideoUrl);
-            
-            if (!response.ok) {
-              throw new Error(`Failed to fetch video: ${response.statusText}`);
-            }
-            
-            const blob = await response.blob();
-            const url = URL.createObjectURL(blob);
-            videoObjectUrl.current = url;
-            setVideoSource(url);
-          } catch (error) {
-            setErrorMessage(`Error loading video: ${error instanceof AxiosError ? error.response?.data?.message : 'Failed to upload video'}`);
-          }
-        }   
-          
-            
+        } catch (error) {
+          setErrorMessage(
+            `Error loading video: ${error instanceof AxiosError ? error.response?.data?.message : 'Failed to upload video'}`
+          );
+        }
+      }
 
-        setIsLoadingVideo(false);
-      
+      setIsLoadingVideo(false);
     };
 
     if (compiledVideoBlob || compiledVideoUrl) {
@@ -179,9 +177,7 @@ export default function CompiledVideoView({
       setIsCopied(true);
       setCopyAnimation(true);
       setTimeout(() => setIsCopied(false), 3000);
-    } catch (err) {
-
-    }
+    } catch (err) {}
   };
 
   // Reset animation state after animation completes
@@ -234,8 +230,10 @@ export default function CompiledVideoView({
               playsInline
               className="w-full rounded-lg shadow-lg"
               onError={(e) => {
-                console.error("Video playback error:", e);
-                setErrorMessage("Error playing video. Please try downloading instead.");
+                console.error('Video playback error:', e);
+                setErrorMessage(
+                  'Error playing video. Please try downloading instead.'
+                );
               }}
             />
           ) : isLoadingVideo ? (
@@ -246,11 +244,24 @@ export default function CompiledVideoView({
           ) : errorMessage ? (
             <div className="w-full aspect-video bg-gray-100 rounded-lg shadow-lg flex flex-col items-center justify-center p-6">
               <div className="text-red-500 mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-12 w-12"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
                 </svg>
               </div>
-              <p className="text-center text-red-600 font-medium">{errorMessage}</p>
+              <p className="text-center text-red-600 font-medium">
+                {errorMessage}
+              </p>
             </div>
           ) : (
             <div className="w-full aspect-video bg-gray-200 rounded-lg shadow-lg flex items-center justify-center">

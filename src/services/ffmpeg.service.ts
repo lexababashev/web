@@ -63,7 +63,6 @@ export const ffmpegService = {
     const ffmpeg = getFFmpeg();
 
     try {
-
       ffmpeg.on('log', ({ message }) => {
         console.log(message);
       });
@@ -76,7 +75,6 @@ export const ffmpegService = {
         }
       });
 
-
       for (let i = 0; i < videos.length; i++) {
         const video = videos[i];
         const inputName = `input${i}.mp4`;
@@ -85,7 +83,6 @@ export const ffmpegService = {
         const end = video.trimEnd ?? video.duration ?? 0;
 
         await ffmpeg.writeFile(inputName, await fetchFile(video.file));
-
 
         const trimArgs = [];
         if (video.trimStart !== undefined || video.trimEnd !== undefined) {
@@ -136,13 +133,11 @@ export const ffmpegService = {
         // ]);
       }
 
-
       let concatFileContent = '';
       for (let i = 0; i < videos.length; i++) {
         concatFileContent += `file temp${i}.mp4\n`;
       }
       await ffmpeg.writeFile('concat_list.txt', concatFileContent);
-
 
       const outputName = 'output.mp4';
       await ffmpeg.exec([
