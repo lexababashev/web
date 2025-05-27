@@ -36,18 +36,14 @@ const ShareButton = ({ eventId }: ShareButtonProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const errorRef = useRef<HTMLDivElement>(null);
 
-  // Filter out owner from displayed invitees
   const displayedInvitees = invitees.filter(
     (invitee) => invitee.name.toLowerCase().trim() !== user?.username
   );
 
-  // Constant limit of 4 visible invitees in UI
   const maxVisibleInvitees = 4;
 
-  // Total limit is 5 (including owner that might exist in backend)
   const totalMaxInvitees = 5;
 
-  // Generate links for invitees that don't have them
   const inviteesWithLinks = displayedInvitees.map((invitee) => ({
     ...invitee,
     link: `http://localhost:3000/invitee-upload/${eventId}/${invitee.id}`,
@@ -72,7 +68,6 @@ const ShareButton = ({ eventId }: ShareButtonProps) => {
       return;
     }
 
-    // Check for duplicate names
     const isDuplicate = invitees.some(
       (invitee) =>
         invitee.name.toLowerCase().trim() ===
@@ -86,7 +81,6 @@ const ShareButton = ({ eventId }: ShareButtonProps) => {
 
     try {
       await createInvitee.mutateAsync({ names: [newInviteeName.trim()] });
-      // Reset form after successful creation
       setShowAddForm(false);
       setNewInviteeName('');
       setError(null);
@@ -110,7 +104,6 @@ const ShareButton = ({ eventId }: ShareButtonProps) => {
     } catch (err) {}
   };
 
-  // Effect to refresh invitees when dropdown is opened
   useEffect(() => {
     if (isOpen) {
       getInvitees.refetch();
