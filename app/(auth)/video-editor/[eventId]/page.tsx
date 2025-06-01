@@ -26,11 +26,9 @@ interface VideoEditorPageProps {
 }
 
 export default function VideoEditorPage({ params }: VideoEditorPageProps) {
-  // Unwrap params using React.use()
   const resolvedParams = React.use(params);
   const eventId = resolvedParams.eventId;
 
-  // Error state for displaying errors to users
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
   const { useGetEvent } = useEvent();
