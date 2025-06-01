@@ -2,11 +2,9 @@ import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 import { VideoItem } from '../../app/(auth)/video-editor/_components/types';
 
-// Instead of initializing at the module level, create a function to get the FFmpeg instance
 let ffmpegInstance: FFmpeg | null = null;
 let isLoaded = false;
 
-// Function to safely get an FFmpeg instance only in browser environments
 function getFFmpeg(): FFmpeg {
   if (ffmpegInstance) return ffmpegInstance;
 
@@ -16,7 +14,6 @@ function getFFmpeg(): FFmpeg {
     return ffmpegInstance;
   }
 
-  // This will never be reached during SSR because we check for window
   throw new Error('FFmpeg can only be used in browser environment');
 }
 
