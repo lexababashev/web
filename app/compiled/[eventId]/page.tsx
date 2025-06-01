@@ -109,15 +109,13 @@ export default function CompiledPage({ params }: CompiledPageProps) {
     }
   }, [fetchError]);
 
-  // Loading progress animation
   useEffect(() => {
     if (isLoading) {
-      // Start loading progress animation
       const loadingInterval = setInterval(() => {
         setLoadingProgress((prev) => {
           if (prev >= 90) {
             clearInterval(loadingInterval);
-            return 90; // Stay at 90% until content is actually loaded
+            return 90;
           }
           return prev + 10;
         });
