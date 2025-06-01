@@ -158,7 +158,6 @@ export const useVideoCollection = () => {
     return false;
   };
 
-  // New function to load uploaded videos from S3
   const loadUploadedVideos = async (uploads: Upload[]) => {
     if (!uploads || uploads.length === 0) return;
 
