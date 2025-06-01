@@ -22,7 +22,6 @@ interface InviteeUploadProps {
 }
 
 export default function InviteeUploadPage({ params }: InviteeUploadProps) {
-  // Unwrap params using React.use()
   const resolvedParams = React.use(params);
   const { eventId, inviteeId } = resolvedParams;
 
@@ -38,7 +37,6 @@ export default function InviteeUploadPage({ params }: InviteeUploadProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [videoPreviewUrl, setVideoPreviewUrl] = useState<string | null>(null);
 
-  // Use the hooks for API integration
   const { useGetInviteeUploads, uploadInviteeVideo } = useUpload();
   const inviteeUploadsQuery = useGetInviteeUploads(eventId, inviteeId);
 
@@ -56,7 +54,7 @@ export default function InviteeUploadPage({ params }: InviteeUploadProps) {
 
   useEffect(() => {
     if (inviteeUploadsQuery.isSuccess) {
-      // If invitee has any uploads, they can't upload again
+
       if (inviteeUploadsQuery.data.length > 0) {
         setUploadStatus('success');
       }
