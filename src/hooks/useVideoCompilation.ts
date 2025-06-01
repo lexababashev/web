@@ -28,7 +28,7 @@ export const useVideoCompilation = () => {
       setIsCompilationComplete(true);
       return true;
 
-      // Note: We don't revoke the URL here as we need it for the player
+      // We don't revoke the URL here as we need it for the player
     } catch (err) {
       alert(error || 'Failed to compile video.');
       return false;
