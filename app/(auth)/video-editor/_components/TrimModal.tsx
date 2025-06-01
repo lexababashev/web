@@ -8,7 +8,7 @@ import {
 import { Button } from '@heroui/button';
 import { VideoItem } from './types';
 
-// Custom Range Slider component
+// Range Slider component
 interface CustomSliderProps {
   minValue: number;
   maxValue: number;
@@ -245,7 +245,7 @@ const TrimModal = forwardRef<HTMLVideoElement, TrimModalProps>(
           onClick={onClose}
         ></div>
 
-        {/* Modal content - removed shadow-xl class */}
+        {/* Modal content */}
         <div className="relative z-10 w-full max-w-5xl mx-4 bg-white dark:bg-gray-900 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
           <div className="p-6">
             <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
@@ -284,7 +284,7 @@ const TrimModal = forwardRef<HTMLVideoElement, TrimModalProps>(
                 </div>
               )}
 
-              {/* Dark overlay when paused - no play button icon */}
+              {/* Dark overlay when paused */}
               {isVideoLoaded && !isPlaying && (
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
               )}
